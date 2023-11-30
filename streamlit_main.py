@@ -45,18 +45,16 @@ def parking_app():
         save_parking_lots(parking_lots)
         st.success("Parking lots reset at 7 PM.")
 
-    # Sidebar to display worker information
-    st.sidebar.title("Worker Information")
-    # Use st.selectbox for worker selection
-    worker_name = st.sidebar.selectbox("Select Worker", workers, index=0)
-
     # Main content
-    st.write(f"Welcome, {worker_name}!")
+    st.write("Welcome to the Parking App!")
 
     # Display available parking lots
     st.subheader("Available Parking Lots")
     available_lots = [lot for lot, status in parking_lots.items() if status is None]
     selected_lot = st.selectbox("Select Parking Lot", available_lots)
+
+    # Dropdown for worker selection
+    worker_name = st.selectbox("Select Worker", workers, index=0)
 
     # Book parking lot
     if st.button("Book Parking Lot"):
