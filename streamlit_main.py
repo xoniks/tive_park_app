@@ -67,6 +67,12 @@ def parking_app():
     elif not agreement_checkbox and st.button("Book Parking Lot"):
         st.warning("Please agree to the terms and conditions before submitting.")
 
+    # Button to reset parking lots
+    if st.button("Reset Parking Lots"):
+        parking_lots = reset_parking_lots() or parking_lots
+        save_parking_lots(parking_lots)
+        st.success("Parking lots successfully reset.")
+
     # Display booked parking lots
     st.subheader("Booked Parking Lots")
     booked_lots = {lot: worker for lot, worker in parking_lots.items() if worker is not None}
