@@ -69,7 +69,7 @@ def parking_app():
     selected_lot = st.selectbox("Select Parking Lot", available_lots)
 
     # Dropdown for worker selection
-    worker_name = st.selectbox("Select Worker", workers, index=0)
+    worker_name = st.selectbox("Choose your name", workers, index=0)
 
     # Checkbox for agreement
     agreement_checkbox = st.checkbox("Pasha baxhanakun spo e rezervoj para se me parku!")
