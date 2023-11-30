@@ -45,6 +45,10 @@ def parking_app():
         save_parking_lots(parking_lots)
         st.success("Parking lots reset at 7 PM.")
 
+    # Display current time
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    st.subheader(f"Current Time: {current_time}")
+
     # Main content
     st.write("Welcome to the Parking App!")
 
@@ -66,12 +70,6 @@ def parking_app():
         st.success(f"{worker_name} successfully booked {selected_lot}.")
     elif not agreement_checkbox and st.button("Book Parking Lot"):
         st.warning("Please agree to the terms and conditions before submitting.")
-
-    # Button to reset parking lots
-    if st.button("Reset Parking Lots"):
-        parking_lots = reset_parking_lots() or parking_lots
-        save_parking_lots(parking_lots)
-        st.success("Parking lots successfully reset.")
 
     # Display booked parking lots
     st.subheader("Booked Parking Lots")
