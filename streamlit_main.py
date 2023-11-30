@@ -63,7 +63,7 @@ def parking_app():
         st.success(f"{worker_name} successfully booked {selected_lot}.")
 
         # Remove booked worker from the list of available workers
-        workers.remove(worker_name)
+        workers = [w for w in workers if w != worker_name]
 
     # Display booked parking lots
     st.subheader("Booked Parking Lots")
