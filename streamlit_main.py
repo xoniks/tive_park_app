@@ -2,6 +2,13 @@ import streamlit as st
 import json
 import datetime
 
+# List of workers
+workers = [
+    "Afrim", "Dorentin", "Mirjeta", "Loredan", "Fjoralb", "Adil", "Laura",
+    "Anita", "Mustafa", "Argenita", "Agon", "Albin", "Astriti", "Erina", "Dren",
+    "Aida", "Kushtrim", "Besfort", "Fitimi", "Rinor", "Fisnik"
+]
+
 # Load or initialize parking lot status from a JSON file
 PARKING_LOTS_FILE = "parking_lots.json"
 
@@ -40,7 +47,8 @@ def parking_app():
 
     # Sidebar to display worker information
     st.sidebar.title("Worker Information")
-    worker_name = st.sidebar.text_input("Enter Worker Name", "")
+    # Use st.selectbox for worker selection
+    worker_name = st.sidebar.selectbox("Select Worker", workers, index=0)
 
     # Main content
     st.write(f"Welcome, {worker_name}!")
