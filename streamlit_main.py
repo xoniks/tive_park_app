@@ -54,7 +54,7 @@ reset_thread.start()
 def parking_app():
     global parking_lots  # Make parking_lots a global variable
 
-    st.title("Tive Parking App")
+    st.title("Tive Kosovo Parking App")
 
     # Display current time
     #current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -62,7 +62,7 @@ def parking_app():
 
     # Main content
     st.write("Welcome ti qe priton me ec e vjen me :racing_car:!")
-
+    st.warning("Qellimi i aplikacionit eshte parandalimi i cmontimit te ventillave ne rast te mos njoftimit per vendin e parkimit!")
     # Display available parking lots
     st.subheader("Available Parking Lots")
     available_lots = [lot for lot, status in parking_lots.items() if status is None]
