@@ -34,7 +34,7 @@ def reset_parking_lots():
 parking_lots = load_parking_lots()
 
 def parking_app():
-    global parking_lots, workers  # Make parking_lots and workers global variables
+    global parking_lots  # Make parking_lots a global variable
 
     st.title("Parking App")
 
@@ -56,14 +56,16 @@ def parking_app():
     # Dropdown for worker selection
     worker_name = st.selectbox("Select Worker", workers, index=0)
 
-    # Book parking lot
-    if st.button("Book Parking Lot"):
+    # Checkbox for agreement
+    agreement_checkbox = st.checkbox("I agree to the terms and conditions")
+
+    # Book parking lot if the checkbox is checked
+    if agreement_checkbox and st.button("Book Parking Lot"):
         parking_lots[selected_lot] = worker_name
         save_parking_lots(parking_lots)
         st.success(f"{worker_name} successfully booked {selected_lot}.")
-
-        # Remove booked worker from the list of available workers
-        workers = [w for w in workers if w != worker_name]
+    elif not agreement_checkbox and st.button("Book Parking Lot"):
+        st.warning("Please agree to the terms and conditions before submitting.")
 
     # Display booked parking lots
     st.subheader("Booked Parking Lots")
