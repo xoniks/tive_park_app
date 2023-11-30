@@ -34,7 +34,7 @@ def reset_parking_lots():
 parking_lots = load_parking_lots()
 
 def parking_app():
-    global parking_lots  # Make parking_lots a global variable
+    global parking_lots, workers  # Make parking_lots and workers global variables
 
     st.title("Parking App")
 
@@ -61,6 +61,9 @@ def parking_app():
         parking_lots[selected_lot] = worker_name
         save_parking_lots(parking_lots)
         st.success(f"{worker_name} successfully booked {selected_lot}.")
+
+        # Remove booked worker from the list of available workers
+        workers.remove(worker_name)
 
     # Display booked parking lots
     st.subheader("Booked Parking Lots")
