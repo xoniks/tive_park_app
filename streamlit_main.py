@@ -72,7 +72,7 @@ def parking_app():
     worker_name = st.selectbox("Select Worker", workers, index=0)
 
     # Checkbox for agreement
-    agreement_checkbox = st.checkbox("Pasha baxhanakun s'po e rezervoj para se me parku kerrin!"")
+    agreement_checkbox = st.checkbox("Pasha baxhanakun s'po e rezervoj para se me parku kerrin!")
 
     # Book parking lot if the checkbox is checked
     if agreement_checkbox and st.button("Parked the car!"):
