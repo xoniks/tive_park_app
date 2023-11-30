@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 import datetime
+import threading
 
 # List of workers
 workers = [
@@ -24,26 +25,36 @@ def save_parking_lots(parking_lots):
         json.dump(parking_lots, file)
 
 def reset_parking_lots():
-    # Reset parking lots at 7 PM every day
+    # Reset parking lots at 20:35 every day
     now = datetime.datetime.now()
-    if now.hour == 20 and now.minute == 30 and now.second == 0:
+    reset_time = datetime.datetime(now.year, now.month, now.day, 20, 35, 0)
+
+    if now >= reset_time:
         return {f"Lot {i + 1}": None for i in range(10)}
     return None
 
 # Initialize parking lot status
 parking_lots = load_parking_lots()
 
+def reset_parking_lots_daily():
+    while True:
+        reset_result = reset_parking_lots()
+        if reset_result:
+            parking_lots = reset_result
+            save_parking_lots(parking_lots)
+            st.success("Parking lots reset at 20:35 every day.")
+        # Sleep for 1 hour before checking again
+        threading.Event().wait(3600)
+
+# Start the thread for daily reset
+reset_thread = threading.Thread(target=reset_parking_lots_daily)
+reset_thread.daemon = True
+reset_thread.start()
+
 def parking_app():
     global parking_lots  # Make parking_lots a global variable
 
     st.title("Parking App")
-
-    # Reset parking lots at 7 PM
-    reset_result = reset_parking_lots()
-    if reset_result:
-        parking_lots = reset_result
-        save_parking_lots(parking_lots)
-        st.success("Parking lots reset at 7 PM.")
 
     # Display current time
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -70,12 +81,6 @@ def parking_app():
         st.success(f"{worker_name} successfully booked {selected_lot}.")
     elif not agreement_checkbox and st.button("Book Parking Lot"):
         st.warning("Please agree to the terms and conditions before submitting.")
-
-    # Button to reset parking lots
-    if st.button("Reset Parking Lots"):
-        parking_lots = reset_parking_lots() or {f"Lot {i + 1}": None for i in range(10)}
-        save_parking_lots(parking_lots)
-        st.success("Parking lots successfully reset.")
 
     # Display booked parking lots
     st.subheader("Booked Parking Lots")
