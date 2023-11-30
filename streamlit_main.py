@@ -72,7 +72,7 @@ def parking_app():
     worker_name = st.selectbox("Select Worker", workers, index=0)
 
     # Checkbox for agreement
-    agreement_checkbox = st.checkbox("I agree to the terms and conditions")
+    agreement_checkbox = st.checkbox("Pasha baxhanakun s'po e rezervoj para se me parku kerrin!"")
 
     # Book parking lot if the checkbox is checked
     if agreement_checkbox and st.button("Parked the car!"):
@@ -80,7 +80,7 @@ def parking_app():
         save_parking_lots(parking_lots)
         st.success(f"{worker_name} successfully parked {selected_lot}.")
     elif not agreement_checkbox and st.button("Parked the car!"):
-        st.warning("Pasha baxhanakun s'po e rezervoj para se me parku kerrin!")
+        st.warning("Check the box!")
 
     # Display booked parking lots
     st.subheader("Full Parking Lots")
