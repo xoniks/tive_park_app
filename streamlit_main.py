@@ -26,7 +26,7 @@ def save_parking_lots(parking_lots):
 def reset_parking_lots():
     # Reset parking lots at 7 PM every day
     now = datetime.datetime.now()
-    if now.hour == 19 and now.minute == 0 and now.second == 0:
+    if now.hour == 20 and now.minute == 30 and now.second == 0:
         return {f"Lot {i + 1}": None for i in range(10)}
     return None
 
@@ -70,6 +70,12 @@ def parking_app():
         st.success(f"{worker_name} successfully booked {selected_lot}.")
     elif not agreement_checkbox and st.button("Book Parking Lot"):
         st.warning("Please agree to the terms and conditions before submitting.")
+
+    # Button to reset parking lots
+    if st.button("Reset Parking Lots"):
+        parking_lots = reset_parking_lots() or {f"Lot {i + 1}": None for i in range(10)}
+        save_parking_lots(parking_lots)
+        st.success("Parking lots successfully reset.")
 
     # Display booked parking lots
     st.subheader("Booked Parking Lots")
