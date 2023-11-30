@@ -16,7 +16,11 @@ PARKING_LOTS_FILE = "parking_lots.json"
 def load_parking_lots():
     try:
         with open(PARKING_LOTS_FILE, "r") as file:
-            return json.load(file)
+            content = file.read()
+            if content:
+                return json.loads(content)
+            else:
+                return {f"Lot {i + 1}": None for i in range(10)}
     except FileNotFoundError:
         return {f"Lot {i + 1}": None for i in range(10)}
 
@@ -37,6 +41,7 @@ def reset_parking_lots():
 parking_lots = load_parking_lots()
 
 def reset_parking_lots_daily():
+    global parking_lots
     while True:
         reset_result = reset_parking_lots()
         if reset_result:
@@ -48,7 +53,6 @@ def reset_parking_lots_daily():
 
 # Start the thread for daily reset
 reset_thread = threading.Thread(target=reset_parking_lots_daily)
-reset_thread.daemon = True
 reset_thread.start()
 
 def parking_app():
@@ -58,10 +62,10 @@ def parking_app():
 
     # Display current time
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    st.write(f"Current Time: {current_time}, parking lots will be reset everyday at 17:30 !")
+    st.write(f"Current Time: {current_time}, parking lots will be reset every day at 17:30!")
 
     # Main content
-   # st.write("Welcome to the Parking App!")
+    # st.write("Welcome to the Parking App!")
 
     # Display available parking lots
     st.subheader("Available Parking Lots")
